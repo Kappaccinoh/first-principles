@@ -1,0 +1,62 @@
+---
+title: "Title of Your Analysis"
+subtitle: "A First Principles Exploration"
+author: "Lim Jia Wei"
+date: "January 2026"
+format:
+  pdf:
+    documentclass: article
+    geometry:
+      - top=25mm
+      - left=25mm
+      - right=25mm
+      - bottom=25mm
+    fontsize: 11pt
+    linestretch: 1.3
+    mainfont: "Times New Roman" 
+    # (Or use "Arial" if you prefer a modern look)
+---
+
+## 1. The Observation
+*Start here. Define the system you are looking at. Whether it's a centralized aircon unit or a lift algorithm, describe the real-world behavior that sparked this inquiry.*
+
+> **Hypothesis:** Write a single sentence summarizing what you intend to prove or explore (e.g., "The inefficiency in lift scheduling comes from a lack of predictive modeling.")
+
+## 2. The Theoretical Model (Physics/Math)
+*This is where you show the "First Principles" depth. Break the problem down into equations.*
+
+We can model the system using the following relationship:
+
+$$
+\mathcal{L} = \sum_{i} (T_{wait}^i + T_{travel}^i)
+$$
+
+*Explain the variables here. Why did you choose this model? What are the constraints?*
+
+## 3. Computational Analysis
+*Now, put on your Software Engineer hat. How do we simulate this? Insert your Python code below to model the theory.*
+
+```{python}
+#| echo: true
+#| label: fig-simulation
+#| fig-cap: "Simulation Results showing System Efficiency"
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+# 1. Define the Parameters
+x = np.linspace(0, 10, 100)
+noise = np.random.normal(0, 0.5, 100)
+y = 2 * x + 5 + noise  # Theoretical model + noise
+
+# 2. Plot the results
+plt.figure(figsize=(6, 4))
+plt.scatter(x, y, alpha=0.6, label='Observed Data')
+plt.plot(x, 2*x + 5, color='red', linestyle='--', label='Theoretical Ideal')
+
+plt.title("Model vs Reality")
+plt.xlabel("Input Variable (e.g., Time)")
+plt.ylabel("Output Variable (e.g., Efficiency)")
+plt.legend()
+plt.grid(True, alpha=0.3)
+plt.show()
