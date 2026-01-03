@@ -22,7 +22,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-q { quotes: "“" "”" "‘" "’"; }
 /* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
@@ -100,7 +99,7 @@ window.Quarto = {
    
   <ul>
   <li><a href="#the-vertical-commute" id="toc-the-vertical-commute" class="nav-link active" data-scroll-target="#the-vertical-commute">1. The Vertical Commute</a></li>
-  <li><a href="#lift-algorithms-at-its-core-how-does-a-lift-think" id="toc-lift-algorithms-at-its-core-how-does-a-lift-think" class="nav-link" data-scroll-target="#lift-algorithms-at-its-core-how-does-a-lift-think">2. Lift Algorithms at its Core: How does a Lift <q>Think</q>?</a>
+  <li><a href="#lift-algorithms-at-its-core-how-does-a-lift-think" id="toc-lift-algorithms-at-its-core-how-does-a-lift-think" class="nav-link" data-scroll-target="#lift-algorithms-at-its-core-how-does-a-lift-think">2. Lift Algorithms at its Core: How does a Lift “Think”?</a>
   <ul class="collapse">
   <li><a href="#modelling-the-lift-cycle" id="toc-modelling-the-lift-cycle" class="nav-link" data-scroll-target="#modelling-the-lift-cycle">2.1 Modelling the Lift Cycle</a></li>
   <li><a href="#the-scan-algorithm" id="toc-the-scan-algorithm" class="nav-link" data-scroll-target="#the-scan-algorithm">2.2 The SCAN Algorithm</a></li>
@@ -157,14 +156,14 @@ window.Quarto = {
 <section id="the-vertical-commute" class="level2">
 <h2 class="anchored" data-anchor-id="the-vertical-commute">1. The Vertical Commute</h2>
 <p>My campus dormitory, Saga College, is a wonderfully made 22-story building overlooking the UTown Green. While the architecture is impressive, the lifts have historically been a major point of contention within our community. Students living on the highest levels are often compensated with great views and cooler weather, but those perks are frequently overshadowed by the frustration of long waiting times. During peak periods, it is not uncommon to wait up to five minutes for a lift; a ridiculous delay when you are rushing for a class.</p>
-<p>To combat these unequal wait times, the community developed an implicit social contract: the <q>non-consecutive floor</q> policy. The idea is simple: if you live on the 5th floor and the 4th or 6th floor has already been pressed, you take the initiative to walk one flight of stairs rather than forcing the lift to stop again. While this arrangement benefits the community’s overall efficiency, it remains a point of friction. Every year, seniors find themselves <q>lecturing</q> the incoming batch on lift etiquette, trying to bridge the gap between individual convenience and collective speed.</p>
-<p>While this has been the center of many community debates - this problem (at least in my own view) isn’t just a social one, but it also invites a deeper analysis into the analysis of elevator algorithms in general. Other than social conditioning, <em>how might one efficiently program a lift to ensure all students are serviced fairly without the <q>Stop-and-Go</q> cycles that lead to these exceedingly long waits?</em></p>
+<p>To combat these unequal wait times, the community developed an implicit social contract: the “non-consecutive floor” policy. The idea is simple: if you live on the 5th floor and the 4th or 6th floor has already been pressed, you take the initiative to walk one flight of stairs rather than forcing the lift to stop again. While this arrangement benefits the community’s overall efficiency, it remains a point of friction. Every year, seniors find themselves “lecturing” the incoming batch on lift etiquette, trying to bridge the gap between individual convenience and collective speed.</p>
+<p>While this has been the center of many community debates - this problem (at least in my own view) isn’t just a social one, but it also invites a deeper analysis into the analysis of elevator algorithms in general. Other than social conditioning, <em>how might one efficiently program a lift to ensure all students are serviced fairly without the “Stop-and-Go” cycles that lead to these exceedingly long waits?</em></p>
 <p>This article is an exploration of lift algorithm design—from simple simulations to the current frontier of the field—to see if we can close the gap between academic theory and the daily reality of community living.</p>
 </section>
 <section id="lift-algorithms-at-its-core-how-does-a-lift-think" class="level2">
-<h2 class="anchored" data-anchor-id="lift-algorithms-at-its-core-how-does-a-lift-think">2. Lift Algorithms at its Core: How does a Lift <q>Think</q>?</h2>
-<p>The problem I have described is classified as a stochastic optimisation problem. It is <q>stochastic</q> because passenger arrivals are random and unpredictable, and it is an <q>optimisation</q> problem because we are interested in finding the best way to utilise a limited resource—in this case, our two lift cars—to service a 22-story building.</p>
-<p>How might we go about comparing lift algorithms to one another to quantiatively prove that one algorithm is more efficient than another? We first need a way to measure the <q>cost</q> of a lift’s journey.</p>
+<h2 class="anchored" data-anchor-id="lift-algorithms-at-its-core-how-does-a-lift-think">2. Lift Algorithms at its Core: How does a Lift “Think”?</h2>
+<p>The problem I have described is classified as a stochastic optimisation problem. It is “stochastic” because passenger arrivals are random and unpredictable, and it is an “optimisation” problem because we are interested in finding the best way to utilise a limited resource—in this case, our two lift cars—to service a 22-story building.</p>
+<p>How might we go about comparing lift algorithms to one another to quantiatively prove that one algorithm is more efficient than another? We first need a way to measure the “cost” of a lift’s journey.</p>
 <section id="modelling-the-lift-cycle" class="level3">
 <h3 class="anchored" data-anchor-id="modelling-the-lift-cycle">2.1 Modelling the Lift Cycle</h3>
 <p>In a simplified model, the efficiency of a lift is described by two factors: how far it travels and how many times it stops. We can model the total time of a single journey (<span class="math inline">\(T\)</span>) using a linear equation: <span class="math display">\[T = (t_f \cdot D) + (t_s \cdot S)\]</span></p>
@@ -177,11 +176,11 @@ window.Quarto = {
 </ul>
 <p>While <span class="math inline">\(D\)</span>, <span class="math inline">\(t_s\)</span>, and <span class="math inline">\(t_f\)</span> are physical constants, <span class="math inline">\(S\)</span> is a discrete random variable dependent on passenger demand. Consequently, the total journey time <span class="math inline">\(T\)</span> becomes a function of the expected number of stops <span class="math inline">\(E[S]\)</span>.</p>
 <p><span class="math display">\[E[T] = (t_f \cdot D) + (t_s \cdot E[S])\]</span></p>
-<p>The assumption that <span class="math inline">\(t_s \gg t_f\)</span> underscores the sensitivity of the model and implies <span class="math inline">\(E[T]\)</span> is dominated by <span class="math inline">\(S\)</span>. In this context, the <q>non-consecutive floor</q> policy is a community-driven attempt to keep <span class="math inline">\(E[S]\)</span> as low as possible.</p>
+<p>The assumption that <span class="math inline">\(t_s \gg t_f\)</span> underscores the sensitivity of the model and implies <span class="math inline">\(E[T]\)</span> is dominated by <span class="math inline">\(S\)</span>. In this context, the “non-consecutive floor” policy is a community-driven attempt to keep <span class="math inline">\(E[S]\)</span> as low as possible.</p>
 </section>
 <section id="the-scan-algorithm" class="level3">
 <h3 class="anchored" data-anchor-id="the-scan-algorithm">2.2 The SCAN Algorithm</h3>
-<p>The SCAN algorithm, often known simply as the <q>Elevator Algorithm,</q> is a classic piece of logic that dates back to the 1980s. It was designed for an era where computer memory was expensive, so the instructions had to be as simple as possible. <span class="citation" data-cites="wiki:elevator_algorithm">(<a href="#ref-wiki:elevator_algorithm" role="doc-biblioref">Wikipedia contributors 2024</a>)</span></p>
+<p>The SCAN algorithm, often known simply as the “Elevator Algorithm,” is a classic piece of logic that dates back to the 1980s. It was designed for an era where computer memory was expensive, so the instructions had to be as simple as possible. <span class="citation" data-cites="wiki:elevator_algorithm">(<a href="#ref-wiki:elevator_algorithm" role="doc-biblioref">Wikipedia contributors 2024</a>)</span></p>
 <p>The defining characteristic of SCAN is its <strong>naive travel direction</strong>. We define the lift’s position at any time <span class="math inline">\(t\)</span> as <span class="math inline">\(f(t) \in \{1, 2, \dots, 22\}\)</span>. The direction of travel <span class="math inline">\(d(t)\)</span> is a binary state that only switches when the lift hits the terminal floors:</p>
 <p><span class="math display">\[d(t+1) =
 \begin{cases}
@@ -193,7 +192,7 @@ window.Quarto = {
 </section>
 <section id="the-look-algorithm-a-smarter-variant" class="level3">
 <h3 class="anchored" data-anchor-id="the-look-algorithm-a-smarter-variant">2.3 The LOOK Algorithm: A Smarter Variant?</h3>
-<p>Most modern elevators utilise the LOOK algorithm, which improves upon SCAN by enabling the lift to <q>smartly</q> <q>look</q> ahead, and reverse direction as soon as no further requests exist in the current headed direction. For a set of active floor requests <span class="math inline">\(R\)</span>, we define the upper and lower bounds of this set as:</p>
+<p>Most modern elevators utilise the LOOK algorithm, which improves upon SCAN by enabling the lift to “smartly” “look” ahead, and reverse direction as soon as no further requests exist in the current headed direction. For a set of active floor requests <span class="math inline">\(R\)</span>, we define the upper and lower bounds of this set as:</p>
 <p><span class="math display">\[r_{max} = \max(r \in R), \quad r_{min} = \min(r \in R)\]</span></p>
 <p>The direction <span class="math inline">\(d(t)\)</span> only reverses if the lift reaches these dynamic bounds:</p>
 <p><span class="math display">\[d(t+1) = -d(t) \quad \text{if} \quad \nexists \, r \in R \text{ s.t. }
@@ -204,21 +203,21 @@ r &lt; f(t) &amp; \text{if } d(t) = -1
 <p>We can express the expected average waiting time under the LOOK algorithm, <span class="math inline">\(E[T_{look}]\)</span>, by the expected range of these requests:</p>
 <p><span class="math display">\[E[T_{look}] = \underbrace{(2 \cdot t_f \cdot E[r_{max} - r_{min}])}_{\text{Expected Travel Time}} + \underbrace{(t_s \cdot E[S])}_{\text{Expected Stop Penalty Time}}\]</span></p>
 <section id="the-limitation-of-smart-logic" class="level4">
-<h4 class="anchored" data-anchor-id="the-limitation-of-smart-logic">2.3.1 The Limitation of <q>Smart</q> Logic</h4>
-<p>In the theoretical limit where passenger load <span class="math inline">\(P \to \infty\)</span>, the LOOK algorithm’s <q>smartness</q> becomes obsolete as it converges perfectly to the SCAN baseline. In this saturated state, the probability of an early reversal vanishes, and the expected distance travelled by the elevator in half a cycle tends to the building’s maximum height:</p>
+<h4 class="anchored" data-anchor-id="the-limitation-of-smart-logic">2.3.1 The Limitation of “Smart” Logic</h4>
+<p>In the theoretical limit where passenger load <span class="math inline">\(P \to \infty\)</span>, the LOOK algorithm’s “smartness” becomes obsolete as it converges perfectly to the SCAN baseline. In this saturated state, the probability of an early reversal vanishes, and the expected distance travelled by the elevator in half a cycle tends to the building’s maximum height:</p>
 <p><span class="math display">\[\lim_{P \to \infty} Pr(r_{max} &lt; N) = \lim_{P \to \infty} \left( \frac{N-1}{N} \right)^P = 0\]</span></p>
 <p><span class="math display">\[\lim_{P \to \infty} E[r_{max} - r_{min}] = N - 1 = D_{max}\]</span></p>
 <p><span class="math display">\[\therefore \lim_{P \to \infty} E[T_{look}] = (2 \cdot D_{max} \cdot t_f) + (t_s \cdot E[S]) = E[T_{scan}]\]</span></p>
 <p>Real-world elevators, thankfully, have only finite capacity. My building’s lift happens to have a maximum load of <span class="math inline">\(P = 15\)</span>. In this case, the probability that the lift is forced to the terminal floor is essentially a coin flip:</p>
 <p><span class="math display">\[Pr(r_{max} = 22) = 1 - \left( \frac{21}{22} \right)^{15} \approx 0.504\]</span></p>
-<p>Even at a more realistic <q>peak</q> load of say <span class="math inline">\(P = 7\)</span>—I personally have yet to encounter a time when the lift was so full that I couldn’t even enter—there still remains a <span class="math inline">\(\approx 28\%\)</span> chance that at least one passenger has requested the 22nd floor.</p>
+<p>Even at a more realistic “peak” load of say <span class="math inline">\(P = 7\)</span>—I personally have yet to encounter a time when the lift was so full that I couldn’t even enter—there still remains a <span class="math inline">\(\approx 28\%\)</span> chance that at least one passenger has requested the 22nd floor.</p>
 <p>On the surface, it seems like the theoretical limit was too pessimistic. If the lift reverses early 72% of the time (<span class="math inline">\(P=7\)</span>) at the busiest times of the day, then the LOOK algorithm should, in practice, significantly outperform SCAN by minimising <span class="math inline">\(E[T]\)</span>.</p>
 <p>While this appears to be a reasonable conclusion, this argument assumes that <span class="math inline">\(D\)</span> is the dominant source of delay. However, our model underscores that the time cost of a journey is dependent on the time spent moving and the time spent stopping:</p>
 <p><span class="math display">\[E[T] = \underbrace{(t_f \cdot E[D])}_{\text{Expected Travel Time}} + \underbrace{(t_s \cdot E[S])}_{\text{Expected Stop Penalty Time}}\]</span></p>
 </section>
 <section id="the-distance-vs-stops-trade-off" class="level4">
 <h4 class="anchored" data-anchor-id="the-distance-vs-stops-trade-off">2.3.2 The Distance vs Stops Trade-Off</h4>
-<p>The <q>trap</q> in modern elevator logic lies in our initial assumption that that <span class="math inline">\(t_s \gg t_f\)</span>. We can define the Stop-to-Transit Ratio (<span class="math inline">\(\rho\)</span>):</p>
+<p>The “trap” in modern elevator logic lies in our initial assumption that that <span class="math inline">\(t_s \gg t_f\)</span>. We can define the Stop-to-Transit Ratio (<span class="math inline">\(\rho\)</span>):</p>
 <p><span class="math display">\[\rho = \frac{t_s}{t_f}\]</span></p>
 <p>By formalizing this ratio, we arrive at the fundamental governing principle of the system:</p>
 <div class="callout callout-style-simple callout-note no-icon callout-titled">
@@ -233,10 +232,10 @@ r &lt; f(t) &amp; \text{if } d(t) = -1
 <div class="callout-body-container callout-body">
 <p>In a system where <span class="math inline">\(\rho = t_s / t_f\)</span>, the temporal cost of a single stop <span class="math inline">\(S\)</span> is equivalent to the cost of traversing <span class="math inline">\(\rho\)</span> floors of distance <span class="math inline">\(D\)</span>.</p>
 <p><span class="math display">\[\Delta T(S) \approx \Delta T(D_{\rho})\]</span></p>
-<p>Where <span class="math inline">\(\rho\)</span> represents the <q>Effective Floor Distance</q> of the stop penalty.</p>
+<p>Where <span class="math inline">\(\rho\)</span> represents the “Effective Floor Distance” of the stop penalty.</p>
 </div>
 </div>
-<p>To verify this proposition, we consider the conditions required for the LOOK algorithm to outperform a manual stop-reduction strategy. For the algorithm to <q>win,</q> the floors saved by reversing early (<span class="math inline">\(\Delta D\)</span>) must outweigh the penalty of the stops made:</p>
+<p>To verify this proposition, we consider the conditions required for the LOOK algorithm to outperform a manual stop-reduction strategy. For the algorithm to “win,” the floors saved by reversing early (<span class="math inline">\(\Delta D\)</span>) must outweigh the penalty of the stops made:</p>
 <p><span class="math display">\[\Delta D \cdot t_f &gt; S \cdot t_s \quad \implies \quad \Delta D &gt; S \cdot \rho\]</span></p>
 <p>The dominance of the stop count is best illustrated by the partial derivatives of the <span class="math inline">\(T\)</span>.</p>
 <p><span class="math display">\[ \frac{\partial T}{\partial S} = t_s, \quad \frac{\partial T}{\partial D} = t_f \]</span></p>
@@ -251,11 +250,11 @@ r &lt; f(t) &amp; \text{if } d(t) = -1
 <li>The Hard Ceiling on Savings. The LOOK algorithm saves time by reversing at the highest requested floor (<span class="math inline">\(r_{max}\)</span>) instead of traveling all the way to the top floor (<span class="math inline">\(N\)</span>). The distance saved is the round-trip travel between those two points:</li>
 </ol>
 <p><span class="math display">\[\Delta D = 2(N - r_{max})\]</span></p>
-<p>Because the lift cannot travel higher than the roof (<span class="math inline">\(N\)</span>) or lower than the lobby (<span class="math inline">\(1\)</span>), this value is physically constrained. Even in the theoretical <q>best case</q> scenario (where the algorithm somehow avoids going to the top entirely), the savings are strictly bounded by the total height of the building:</p>
+<p>Because the lift cannot travel higher than the roof (<span class="math inline">\(N\)</span>) or lower than the lobby (<span class="math inline">\(1\)</span>), this value is physically constrained. Even in the theoretical “best case” scenario (where the algorithm somehow avoids going to the top entirely), the savings are strictly bounded by the total height of the building:</p>
 <p><span class="math display">\[\Delta D &lt; 2N\]</span></p>
 <p>In a 22-story building, the algorithm has a hard limit of 44 floors. It physically cannot save more distance than exists in the shaft.</p>
 <ol start="2" type="1">
-<li>The High Ceiling on Penalities. Conversely, the <q>Effective Distance</q> added by stops scales linearly with the number of interruptions <span class="math inline">\(S\)</span>, which is bounded by the lift capacity <span class="math inline">\(P = 15\)</span>. Using our arbitrary equivalence ratio <span class="math inline">\(\rho \approx 10\)</span>:</li>
+<li>The High Ceiling on Penalities. Conversely, the “Effective Distance” added by stops scales linearly with the number of interruptions <span class="math inline">\(S\)</span>, which is bounded by the lift capacity <span class="math inline">\(P = 15\)</span>. Using our arbitrary equivalence ratio <span class="math inline">\(\rho \approx 10\)</span>:</li>
 </ol>
 <p><span class="math display">\[C_{stops} = S \cdot \rho = 10S\]</span></p>
 <p>Unlike the distance savings, this penalty has no hard ceiling. As long as people keep entering the lift, <span class="math inline">\(S\)</span> keeps increasing.</p>
@@ -266,7 +265,7 @@ r &lt; f(t) &amp; \text{if } d(t) = -1
 <p><span class="math display">\[S &gt; \frac{2N}{\rho}\]</span></p>
 <p>Substituting the values for Saga College (<span class="math inline">\(N=22, \rho=10\)</span>):</p>
 <p><span class="math display">\[S &gt; \frac{44}{10} = 4.4\]</span></p>
-<p>This inequality provides a stark mathematical proof: At just 5 stops, the <q>virtual distance</q> added by the passengers exceeds the total physical height of the building.Even if the LOOK algorithm performs perfectly—saving the maximum possible distance every single time—its contribution is mathematically erased if the passengers make just 5 stops. The system is fighting a losing battle: the algorithm is optimized to save <q>inches</q> (distance) while the passengers are adding <q>miles</q> (stops).</p>
+<p>This inequality provides a stark mathematical proof: At just 5 stops, the “virtual distance” added by the passengers exceeds the total physical height of the building.Even if the LOOK algorithm performs perfectly—saving the maximum possible distance every single time—its contribution is mathematically erased if the passengers make just 5 stops. The system is fighting a losing battle: the algorithm is optimized to save “inches” (distance) while the passengers are adding “miles” (stops).</p>
 <p>As such, community efforts to avoid consecutive floor pressing is a high-impact intervention. While the algorithm is designed to optimise the path (<span class="math inline">\(D\)</span>), the residents are the only ones capable of optimising the variable that actually drives the delay: the number of stops (<span class="math inline">\(S\)</span>). By coordinating to avoid consecutive floors, students are solving the heavy part of the equation that the elevator’s software cannot.</p>
 </section>
 </section>
