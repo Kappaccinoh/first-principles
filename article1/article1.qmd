@@ -1,9 +1,12 @@
 ---
-title: "Title of Your Analysis"
+title: "Optimising Elevator Algorithms - Can we do better?"
 subtitle: "A First Principles Exploration"
 author: "Lim Jia Wei"
-date: "January 2026"
+date: today
 format:
+  html:
+    style: journal
+    toc: true
   pdf:
     documentclass: article
     geometry:
@@ -13,50 +16,57 @@ format:
       - bottom=25mm
     fontsize: 11pt
     linestretch: 1.3
-    mainfont: "Times New Roman" 
-    # (Or use "Arial" if you prefer a modern look)
+    mainfont: "Times New Roman"
+bibliography: references.bib
 ---
 
-## 1. The Observation
-*Start here. Define the system you are looking at. Whether it's a centralized aircon unit or a lift algorithm, describe the real-world behavior that sparked this inquiry.*
+## 1. The Vertical Commute
+My campus dormitory, Saga College, is a wonderfully made 23-story building overlooking the UTown Green. While the architecture is impressive, the lifts have historically been a major point of contention within our community. Students living on the highest levels are often compensated with great views and cooler weather, but those perks are frequently overshadowed by the frustration of long waiting times. During peak periods, it is not uncommon to wait up to five minutes for a lift; a ridiculous delay when you are rushing for a class.
 
-> **Hypothesis:** Write a single sentence summarizing what you intend to prove or explore (e.g., "The inefficiency in lift scheduling comes from a lack of predictive modeling.")
+To combat these unequal wait times, the community developed an implicit social contract: the "non-consecutive floor" policy. The idea is simple: if you live on the 5th floor and the 4th or 6th floor has already been pressed, you take the initiative to walk one flight of stairs rather than forcing the lift to stop again. While this arrangement benefits the community's overall efficiency, it remains a point of friction. Every year, seniors find themselves "lecturing" the incoming batch on lift etiquette, trying to bridge the gap between individual convenience and collective speed.
 
-## 2. The Theoretical Model (Physics/Math)
-*This is where you show the "First Principles" depth. Break the problem down into equations.*
+This problem isn't just a social one; it invites a deeper analysis into elevator algorithms. *How do we efficiently program a lift to ensure all students are serviced fairly without the "Stop-and-Go" cycles that lead to these exceedingly long waits?* This article is an exploration of lift algorithm design—from simple simulations to the current frontier of the field—to see if we can close the gap between academic theory and the daily reality of community living.
 
-We can model the system using the following relationship:
+## 2. Defining the Baseline: How a Lift "Thinks"
+At its core, the problem at hand is classified as a stochastic optimisation problem. It is "stochastic" because passenger arrivals are random and unpredictable, and it is an "optimisation" problem because we are interested in finding the best way to utilise a limited resource—in this case, our two lift cars—to service a 23-story building. 
 
-$$
-\mathcal{L} = \sum_{i} (T_{wait}^i + T_{travel}^i)
-$$
+To evaluate any algorithm, we first need a way to measure the "cost" of a lift's journey.
 
-*Explain the variables here. Why did you choose this model? What are the constraints?*
+### 2.1 The Math of the Lift Cycle
+In a simplified model, the efficiency of a lift is described by two factors: how far it travels and how many times it stops. We can model the total time of a single journey ($T$) using a linear equation:
+$$T = (D \cdot t_f) + (S \cdot t_s)$$
 
-## 3. Computational Analysis
-*Now, put on your Software Engineer hat. How do we simulate this? Insert your Python code below to model the theory.*
+**Where:**
 
-```{python}
-#| echo: true
-#| label: fig-simulation
-#| fig-cap: "Simulation Results showing System Efficiency"
+* $D$: The total distance (number of floors) the lift travels.
+* $t_f$: The constant time taken to pass a single floor without stopping.
+* $S$: The number of stops made during the journey.
+* $t_s$: The Stop Penalty—the fixed time lost for doors opening, passenger transfer, and doors closing.
 
-import matplotlib.pyplot as plt
-import numpy as np
+While $D$, $t_s$, and $t_f$ are physical constants, $S$ is a discrete random variable dependent on passenger demand. Consequently, the total journey time $T$ becomes a function of the expected number of stops $E[S]$.
 
-# 1. Define the Parameters
-x = np.linspace(0, 10, 100)
-noise = np.random.normal(0, 0.5, 100)
-y = 2 * x + 5 + noise  # Theoretical model + noise
+$$E[T] = (D \cdot t_f) + t_s \cdot E[S]$$
+$$Var(T) = t^2_s \cdot Var(S)$$
 
-# 2. Plot the results
-plt.figure(figsize=(6, 4))
-plt.scatter(x, y, alpha=0.6, label='Observed Data')
-plt.plot(x, 2*x + 5, color='red', linestyle='--', label='Theoretical Ideal')
+The assumption that $t_s \gg t_f$ underscores the sensitivity of the model; small fluctuations in $S$ result in disproportionately large swings in the obtained value of $T$. The "non consecutive floor" policy is a community-driven attempt to minimise $Var(T)$ to stabilise $E[T]$.
 
-plt.title("Model vs Reality")
-plt.xlabel("Input Variable (e.g., Time)")
-plt.ylabel("Output Variable (e.g., Efficiency)")
-plt.legend()
-plt.grid(True, alpha=0.3)
-plt.show()
+### 2.2 The SCAN Algorithm
+The SCAN algorithm, often known simply as the "Elevator Algorithm," is a classic piece of logic that dates back to the 1980s [@wiki:elevator_algorithm]. It was designed for an era where computer memory was expensive, so the instructions had to be as simple as possible.
+
+The defining characteristic of SCAN is its **naive travel direction**. We define the lift's position at any time $t$ as $f(t) \in \{1, 2, \dots, 23\}$. The direction of travel $d(t)$ is a binary state that only switches when the lift hits the terminal floors:
+
+$$d(t+1) = 
+\begin{cases} 
+1 (\text{Up}) & \text{if } f(t) = 1 \\ 
+-1 (\text{Down}) & \text{if } f(t) = 23 
+\end{cases}$$
+
+Because the lift is forced to travel the full 23 stories ($1 \to 23 \to 1$) regardless of the density of requests, the distance variable $D$ in our earlier equation is essentially "locked in" as a constant ($2 \cdot D_{max}$). This mathematical rigidity means that the total cycle time $T$ becomes almost entirely dependent on the realization of the random variable $S$:
+
+$$T_{cycle} = (2 \cdot D_{max} \cdot t_f) + (S \cdot t_s)$$
+
+
+# References
+
+::: {#refs}
+:::
